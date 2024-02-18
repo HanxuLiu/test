@@ -3,6 +3,28 @@
 gcc test_step.c -o test_step
 gcc test_stepper.c -o test_stepper
 gcc test_trace.c -o test_trace
+gcc -g test_single.c -o test_single -m32
+
+## asm code
+
+```
+lhx@ubuntu:~/test/test_ptrace/test_singlestep$ objdump -d demo-asm/hello
+
+demo-asm/hello：     文件格式 elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000401000 <_start>:
+  401000:	ba 0e 00 00 00       	mov    $0xe,%edx
+  401005:	b9 00 20 40 00       	mov    $0x402000,%ecx
+  40100a:	bb 01 00 00 00       	mov    $0x1,%ebx
+  40100f:	b8 04 00 00 00       	mov    $0x4,%eax
+  401014:	cd 80                	int    $0x80
+  401016:	b8 01 00 00 00       	mov    $0x1,%eax
+  40101b:	cd 80                	int    $0x80
+
+```
 
 ## result 1
 
@@ -40,3 +62,12 @@ Hello, world!
 [10165] icounter = 6.  EIP = 0x00401016.  instr = 0x000001b8
 [10165] icounter = 7.  EIP = 0x0040101b.  instr = 0x000080cd
 [10165] the child executed 7 instructions
+
+## result 4
+
+lhx@ubuntu:~/test/test_ptrace/test_singlestep$ ./test_single 
+Hello, world!
+EIP: 401016 Instruction executed: 1b8
+EIP: 40101b Instruction executed: 80cd
+EIP: 40101d Instruction executed: 0
+
