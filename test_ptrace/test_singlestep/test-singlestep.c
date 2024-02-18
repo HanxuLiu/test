@@ -1,7 +1,9 @@
 /*================================================================
 *  Author: LiuHanxu
 *  Date: 2023-01-06
-*  Description: 
+*  Description: FIXME: I don't known why it can not work
+*  with hello.c coding by C, and not understanding result with
+*  hello.s coding by asm.
 ================================================================*/
 
 #include <stdio.h>
@@ -16,7 +18,7 @@ int main()
   int counter = 0;
   pid_t pid = fork();
   if (pid == 0) { // child process
-    execl("./a.out", "HelloWorld", NULL);
+    execl("./demo-asm/hello", "HelloWorld", NULL);
   } else { // parent process
     ptrace(PTRACE_ATTACH, pid, NULL, NULL);
     while (1) {
