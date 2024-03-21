@@ -4,10 +4,13 @@
 #include <unistd.h>
 
 int main()
-{  
+{
     pid_t child;
     child = fork();
-    if(child == 0) // child process
+    if(child < 0) // error case
+    {
+	    printf("ptrace error\n");
+    } else if(child == 0) // child process
     {
         ptrace(PTRACE_TRACEME, 0, NULL, NULL);
         printf("child to call execl, run ls command\n");
